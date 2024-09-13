@@ -19,21 +19,28 @@ def main():
   df = pd.read_excel(SOURCE_FILE, nrows=OBJECTS_COUNT, usecols=COLUMN_NAMES)
 
   # hierarcical clustering
-  scaler = preprocessing.MinMaxScaler().fit(df.to_numpy())
-  scaled_data = scaler.transform(df.to_numpy())
-  distance_matrix = linkage(scaled_data, method=CLUSTERS_DISTANCE_TYPE, metric=OBJECTS_DISTANCE_TYPE)
-
+  distance_matrix = make_hierarciacal_clustering(df)
   # dendrogram plotting
-  fig = plt.figure(figsize=(15, 30))
-  fig.patch.set_facecolor('white')
-  dendrogram(distance_matrix,
-             orientation='top',
-             leaf_font_size=12,)
+  plot_dendrogram(distance_matrix)
 
   # k-means clustering
   
 
   plt.show()
+
+def plot_dendrogram(distance_matrix):
+  fig = plt.figure(figsize=(15, 30))
+  fig.patch.set_facecolor('white')
+  dendrogram(distance_matrix,
+            orientation='top',
+            leaf_font_size=12,)
+
+
+def make_hierarciacal_clustering(df):
+  scaler = preprocessing.MinMaxScaler().fit(df.to_numpy())
+  scaled_data = scaler.transform(df.to_numpy())
+  distance_matrix = linkage(scaled_data, method=CLUSTERS_DISTANCE_TYPE, metric=OBJECTS_DISTANCE_TYPE)
+  return distance_matrix
 
 
 if __name__ == '__main__':
