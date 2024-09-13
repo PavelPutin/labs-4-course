@@ -10,7 +10,7 @@ TITLE = 'Lab 1'
 SOURCE_FILE = '../08_Сегментация покупателей/customers.xls'
 OBJECTS_COUNT = 184
 COLUMN_NAMES = ('пол код', 'возраст код', 'Телеканал', 'Профессия.1', 'Пресса')
-OBJECTS_DISTANCE_TYPE = 'ecuclidean'
+OBJECTS_DISTANCE_TYPE = 'euclidean'
 CLUSTERS_DISTANCE_TYPE = 'ward'
 
 
