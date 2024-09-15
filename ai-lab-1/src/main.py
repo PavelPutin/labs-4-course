@@ -85,6 +85,7 @@ def describe_k_means_clusters(df):
         if col != 'Размер':
           print(f'{col}: {DECODE[col][value]}')
       print()
+      
 
 def plot_k_means(df, scaled_data, WCSS, Silh, result):
     _, axes = plt.subplots(1, 3, figsize=(10, 5))
@@ -115,6 +116,7 @@ def plot_k_means(df, scaled_data, WCSS, Silh, result):
     axes[2].set_xlabel('MDS ось x')
     axes[2].set_ylabel('MDS ось y')
 
+
 def make_k_means_clustering(df):
     scaler = preprocessing.MinMaxScaler().fit(df.to_numpy())
     scaled_data = scaler.transform(df.to_numpy())
@@ -138,7 +140,7 @@ def make_k_means_clustering(df):
 
 
 def plot_dendrogram(distance_matrix):
-  fig = plt.figure(figsize=(15, 30))
+  fig = plt.figure(figsize=(11, 11))
   fig.patch.set_facecolor('white')
   dendrogram(distance_matrix,
             orientation='top',
