@@ -14,7 +14,7 @@ TITLE = 'Lab 1'
 SOURCE_FILE = '../08_Сегментация покупателей/customers.xls'
 OBJECTS_COUNT = 184
 SHEET_NAME = 'база спсс'
-COLUMN_NAMES = ('пол код', 'возраст код', 'Телеканал', 'Профессия', 'Пресса')
+COLUMN_NAMES = ('пол код', 'возраст код', 'Телеканал', 'Пресса')
 OBJECTS_DISTANCE_TYPE = 'euclidean'
 CLUSTERS_DISTANCE_TYPE = 'ward'
 # Определён на основе "локтя" и "силуэта"
@@ -85,10 +85,10 @@ def describe_k_means_clusters(df):
         if col != 'Размер':
           print(f'{col}: {DECODE[col][value]}')
       print()
-      
+
 
 def plot_k_means(df, scaled_data, WCSS, Silh, result):
-    _, axes = plt.subplots(1, 3, figsize=(10, 5))
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
     axes[0].plot(range(2, 11), WCSS)
     axes[0].set_title('Метод локтя')
@@ -116,6 +116,8 @@ def plot_k_means(df, scaled_data, WCSS, Silh, result):
     axes[2].set_xlabel('MDS ось x')
     axes[2].set_ylabel('MDS ось y')
 
+    fig.savefig('k-means.png')
+
 
 def make_k_means_clustering(df):
     scaler = preprocessing.MinMaxScaler().fit(df.to_numpy())
@@ -129,7 +131,9 @@ def make_k_means_clustering(df):
                     max_iter=300, n_init=10, random_state=0)
       kmeans.fit(scaled_data)
       elbow.append(kmeans.inertia_)
-      silhouette.append(silhouette_score(scaled_data, kmeans.fit_predict(scaled_data), metric='euclidean'))
+      silhouette.append(silhouette_score(scaled_data, 
+                                         kmeans.fit_predict(scaled_data), 
+                                         metric='euclidean'))
 
     result = KMeans(n_clusters=K_MEANS_CLUSTERS, init='k-means++',
                     max_iter=300, n_init=10, random_state=0)
@@ -140,17 +144,20 @@ def make_k_means_clustering(df):
 
 
 def plot_dendrogram(distance_matrix):
-  fig = plt.figure(figsize=(11, 11))
+  fig = plt.figure(figsize=(15, 5))
   fig.patch.set_facecolor('white')
   dendrogram(distance_matrix,
             orientation='top',
             leaf_font_size=12,)
+  fig.savefig('dendrogram.png')
 
 
 def make_hierarciacal_clustering(df):
   scaler = preprocessing.MinMaxScaler().fit(df.to_numpy())
   scaled_data = scaler.transform(df.to_numpy())
-  return linkage(scaled_data, method=CLUSTERS_DISTANCE_TYPE, metric=OBJECTS_DISTANCE_TYPE)
+  return linkage(scaled_data,
+                 method=CLUSTERS_DISTANCE_TYPE,
+                 metric=OBJECTS_DISTANCE_TYPE)
 
 
 if __name__ == '__main__':
