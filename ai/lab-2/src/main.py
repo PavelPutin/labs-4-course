@@ -2,9 +2,7 @@ import pandas as pd
 from art import tprint
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
-from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima.model import ARIMA
-from sklearn.metrics import mean_squared_error, mean_absolute_error
 import locale
 
 
@@ -21,7 +19,14 @@ def main():
   df_trend = df[COLUMNS[0]].rolling(window=12).mean()
   df_season = df[COLUMNS[0]].rolling(window=2).mean()
   df = make_forecast(df)
+  print_forecast_values(df)
   plot_data(df, df_trend, df_season)
+
+
+def print_forecast_values(df):
+  print('Прогнозируемые значения')
+  for date, value in zip(df['date_'][-FORECAST_PERIODS:], df['forecast'][-FORECAST_PERIODS:]):
+    print(f'{date.strftime('%b %Y')}: {value:.3f}')
 
 
 def make_forecast(df):
@@ -30,15 +35,14 @@ def make_forecast(df):
   model_fit = model.fit()
   forecast = model_fit.forecast(steps=FORECAST_PERIODS)
 
-  future_dates = pd.date_range(start=df[COLUMNS[1]][len(df[COLUMNS[1]]) - 1] + pd.DateOffset(months=1), periods=FORECAST_PERIODS, freq='ME')
+  future_dates = pd.date_range(
+    start=df[COLUMNS[1]][len(df[COLUMNS[1]]) - 1] + pd.DateOffset(months=1),
+    periods=FORECAST_PERIODS,
+    freq='ME')
   forecast_df = pd.DataFrame({
     'date_': future_dates,
     'forecast': forecast
   })
-
-  print('Прогнозируемые значения')
-  for date, value in zip(forecast_df['date_'], forecast_df['forecast']):
-    print(f'{date.strftime('%b %Y')}: {value:.3f}')
 
   df = df._append(forecast_df, ignore_index=True)
   return df
