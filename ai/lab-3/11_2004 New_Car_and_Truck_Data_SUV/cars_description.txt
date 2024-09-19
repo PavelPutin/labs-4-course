@@ -1,0 +1,68 @@
+Построить алгоритм, который различал бы один класс автомобилей от всех остальных.
+
+Задача: Распознать внедорожник (Sport Utility Vehicle).
+
+
+NAME:  2004 New Car and Truck Data
+TYPE:  Sample
+SIZE:  428 observations, 19 variables
+
+
+DESCRIPTIVE ABSTRACT:
+Specifications are given for 428 new vehicles for the 2004 year. The variables recorded include price, measurements 
+relating to the size of the vehicle, and fuel efficiency.
+
+
+VARIABLE DESCRIPTIONS:
+
+Columns	Variables
+  1- 45	Vehicle Name
+ 47		Sports Car? (1=yes, 0=no)
+ 49		Sport Utility Vehicle? (1=yes, 0=no)
+ 51		Wagon? (1=yes, 0=no)
+ 53		Minivan? (1=yes, 0=no)
+ 55		Pickup? (1=yes, 0=no)
+ 57		All-Wheel Drive? (1=yes, 0=no)
+ 59		Rear-Wheel Drive? (1=yes, 0=no)
+ 61- 66	Suggested Retail Price, what the manufacturer thinks the
+		vehicle is worth, including adequate profit for the
+		automaker and the dealer (U.S. Dollars)
+ 68- 73	Dealer Cost (or "invoice price"), what the dealership pays
+		the manufacturer (U.S. Dollars)
+ 75- 77	Engine Size (liters)
+ 79- 80	Number of Cylinders (=-1 if rotary engine)
+ 82- 84	Horsepower
+ 86- 87	City Miles Per Gallon
+ 89- 90	Highway Miles Per Gallon
+ 92- 95	Weight (Pounds)
+ 97- 99	Wheel Base (inches)
+101-103	Length (inches)
+105-106	Width (inches)
+
+
+SOURCE:
+_Kiplinger's Personal Finance_, December 2003, vol. 57, no. 12, pp. 104-123, http:/www.kiplinger.com 
+
+
+RELATED DATASETS:
+
+A similar dataset appeared as one of the sample datasets shipped with the _Student Edition of Execustat_ (PWS-KENT 1990).
+
+Another similar dataset, submitted by Robin Lock, may be found in the _Journal of Statistics Education_ dataset archive at 
+http://www.amstat.org/publications/ jse/datasets/93cars.dat. The accompanying article "1993 New Car Data", Journal of 
+Statistics Education, vol. 1, no. 1, by Lock (1993) may be found at the site 
+http://www.amstat.org/publications/jse/v1n1/datasets.lock.html.
+
+COMMENTS ON MISSING VALUES:
+Length and Width of pickup trucks were not given in _Kiplinger's_. Possible updates to the dataset (viewable on a vehicle 
+by vehicle basis) may be found at the site http://www.kiplinger.com/tools/carfinder/; these updates may allow some of the 
+missing values to be filled in.
+
+PEDAGOGICAL NOTES:
+Suggested Retail Price/Dealer Cost and the two MPG variables are popular choices as 
+response variables. One suggested exploration - try fitting the MPG variables as linear in reciprocal weight (clear 
+outliers to this strongly linear pattern are the hybrid gas/electric cars). Other explorations are suggested in the 
+article of Lock (1993) referenced above.
+
+SUBMITTED BY:
+Roger W. Johnson
