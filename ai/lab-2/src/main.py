@@ -20,29 +20,28 @@ def main():
   df = read_data()
   df_trend = df[COLUMNS[0]].rolling(window=12).mean()
   df_season = df[COLUMNS[0]].rolling(window=2).mean()
+  df = make_forecast(df)
+  plot_data(df, df_trend, df_season)
 
-  df['stationare'] = df[COLUMNS[0]] - df[COLUMNS[0]].rolling(window=2).mean()
-  df['stationare'] = df['stationare'].diff()
-  df.fillna(0, inplace=True)
 
-  forecast_column = COLUMNS[0]
-  model = ARIMA(df[forecast_column], order=(1, 1, 1))
-  model_fit = model.fit()
-  forecast = model_fit.forecast(steps=FORECAST_PERIODS)
-  mse = mean_squared_error(df[forecast_column][-FORECAST_PERIODS:], forecast)
-  mae = mean_absolute_error(df[forecast_column][-FORECAST_PERIODS:], forecast)
-  print(f'MSE: {mse}')
-  print(f'MAE: {mae}')
+def make_forecast(df):
+    forecast_column = COLUMNS[0]
+    model = ARIMA(df[forecast_column], order=(1, 1, 1))
+    model_fit = model.fit()
+    forecast = model_fit.forecast(steps=FORECAST_PERIODS)
+    mse = mean_squared_error(df[forecast_column][-FORECAST_PERIODS:], forecast)
+    mae = mean_absolute_error(df[forecast_column][-FORECAST_PERIODS:], forecast)
+    print(f'MSE: {mse}')
+    print(f'MAE: {mae}')
 
-  future_dates = pd.date_range(start=df[COLUMNS[1]][len(df[COLUMNS[1]]) - 1], periods=FORECAST_PERIODS, freq='M')
-  forecast_df = pd.DataFrame({
+    future_dates = pd.date_range(start=df[COLUMNS[1]][len(df[COLUMNS[1]]) - 1] + pd.DateOffset(months=1), periods=FORECAST_PERIODS, freq='ME')
+    forecast_df = pd.DataFrame({
     'date_': future_dates,
     'forecast': forecast
   })
 
-  df = df._append(forecast_df, ignore_index=True)
-
-  plot_data(df, df_trend, df_season)
+    df = df._append(forecast_df, ignore_index=True)
+    return df
 
 
 def plot_data(df, trend, season):
