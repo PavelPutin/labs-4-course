@@ -25,23 +25,23 @@ def main():
 
 
 def make_forecast(df):
-    forecast_column = COLUMNS[0]
-    model = ARIMA(df[forecast_column], order=(1, 1, 1))
-    model_fit = model.fit()
-    forecast = model_fit.forecast(steps=FORECAST_PERIODS)
-    mse = mean_squared_error(df[forecast_column][-FORECAST_PERIODS:], forecast)
-    mae = mean_absolute_error(df[forecast_column][-FORECAST_PERIODS:], forecast)
-    print(f'MSE: {mse}')
-    print(f'MAE: {mae}')
+  forecast_column = COLUMNS[0]
+  model = ARIMA(df[forecast_column], order=(1, 1, 1))
+  model_fit = model.fit()
+  forecast = model_fit.forecast(steps=FORECAST_PERIODS)
 
-    future_dates = pd.date_range(start=df[COLUMNS[1]][len(df[COLUMNS[1]]) - 1] + pd.DateOffset(months=1), periods=FORECAST_PERIODS, freq='ME')
-    forecast_df = pd.DataFrame({
+  future_dates = pd.date_range(start=df[COLUMNS[1]][len(df[COLUMNS[1]]) - 1] + pd.DateOffset(months=1), periods=FORECAST_PERIODS, freq='ME')
+  forecast_df = pd.DataFrame({
     'date_': future_dates,
     'forecast': forecast
   })
 
-    df = df._append(forecast_df, ignore_index=True)
-    return df
+  print('Прогнозируемые значения')
+  for date, value in zip(forecast_df['date_'], forecast_df['forecast']):
+    print(f'{date.strftime('%b %Y')}: {value:.3f}')
+
+  df = df._append(forecast_df, ignore_index=True)
+  return df
 
 
 def plot_data(df, trend, season):
@@ -61,7 +61,7 @@ def plot_data(df, trend, season):
 
 def read_data():
   df = pd.read_csv(SOURCE_FILE, sep=COLUMN_SEPARATOR, usecols=COLUMNS, parse_dates=True)
-  df[COLUMNS[1]] = pd.to_datetime(df[COLUMNS[1]])
+  df[COLUMNS[1]] = pd.to_datetime(df[COLUMNS[1]], format='mixed')
   return df
 
 
