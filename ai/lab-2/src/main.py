@@ -56,6 +56,8 @@ def plot_data(df, trend, season):
   ax.xaxis.set_minor_formatter(mticker.NullFormatter())
   ax.grid(True)
   ax.legend()
+  ax.set_title('Продажи креплённых вин в Австралии')
+  ax.set_ylabel('Тысячи литров')
   plt.show()
 
 
