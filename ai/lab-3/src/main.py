@@ -1,6 +1,9 @@
 from art import tprint
 import pandas as pd
 from enum import StrEnum
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
 
 TITLE = 'Lab 3'
@@ -27,21 +30,54 @@ class column_names(StrEnum):
   LENGTH = 'Length'
   WIDTH = 'Width'
 
-
   def bool_columns():
     return (
       column_names.SPORTS_CAR,
       column_names.SPORT_UTILITY_VEHICLE,
       column_names.MINIVAN,
       column_names.PICKUP,
+    )
+  
+  def train_columns():
+    return (
       column_names.ALL_WHEEL_DRIVE,
-      column_names.REAR_WHEEL_DRIVE,
+      column_names.ENGINE_SIZE,
+      column_names.NUMBER_OF_CYLINDERS,
+      column_names.HORSEPOWER,
+      column_names.WEIGHT,
+      column_names.WHEEL_BASE,
     )
 
 
 def main():
   df = get_data()
-  print(df.head())
+  df_sport_utility_train = df[df[column_names.SPORT_UTILITY_VEHICLE] == True].sample(20)
+  df_other_train = df[df[column_names.SPORT_UTILITY_VEHICLE] == False].sample(50)
+  df_train = pd.concat([df_sport_utility_train, df_other_train])
+  classes = df_train[column_names.SPORT_UTILITY_VEHICLE].apply(lambda v: 'SPORT_UTILITY' if v else 'OTHER')
+  df_train_filtered = df_train.filter(items=column_names.train_columns())
+  df_train_filtered.fillna(0, inplace=True)
+
+  knn = KNeighborsClassifier(n_neighbors=7)
+  knn_model = knn.fit(df_train_filtered, classes)
+  # model accuracy test
+  knn_accuracy_test_predictions = knn.predict(df_train_filtered)
+  accuracy = accuracy_score(classes, knn_accuracy_test_predictions)
+  print(f'Accuracy: {accuracy}')
+  
+  df_real_data = pd.concat([df, df_train]).drop_duplicates(keep=False)
+  df_real_data_filtered = df_real_data.filter(items=column_names.train_columns())
+  df_real_data_filtered.fillna(0, inplace=True)
+  knn_prediction = knn.predict(df_real_data_filtered)
+  df_real_data['prediction'] = knn_prediction
+  print(f'Всего данных: {len(df_real_data)}')
+  real_classes = df_real_data[column_names.SPORT_UTILITY_VEHICLE].apply(lambda v: 'SPORT_UTILITY' if v else 'OTHER')
+  accuracy = accuracy_score(real_classes, knn_prediction)
+  print(f'Точноcть на реальных данных: {accuracy}')
+
+
+  # print(df_real_data[df_real_data['prediction'] == 'SPORT_UTILITY'].head(50))
+  df_real_data.to_csv('output.csv', sep=';')
 
 
 def get_data():
