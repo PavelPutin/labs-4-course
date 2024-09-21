@@ -4,6 +4,8 @@ from enum import StrEnum
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
+from dataclasses import dataclass
+import statistics
 
 
 TITLE = 'Lab 3'
@@ -49,35 +51,120 @@ class column_names(StrEnum):
     )
 
 
+@dataclass
+class Data:
+  values: pd.DataFrame
+  classes: pd.DataFrame
+  total: int
+  sport_utilities: int
+  other: int
+
+
 def main():
   df = get_data()
-  df_sport_utility_train = df[df[column_names.SPORT_UTILITY_VEHICLE] == True].sample(20)
-  df_other_train = df[df[column_names.SPORT_UTILITY_VEHICLE] == False].sample(50)
-  df_train = pd.concat([df_sport_utility_train, df_other_train])
-  classes = df_train[column_names.SPORT_UTILITY_VEHICLE].apply(lambda v: 'SPORT_UTILITY' if v else 'OTHER')
-  df_train_filtered = df_train.filter(items=column_names.train_columns())
-  df_train_filtered.fillna(0, inplace=True)
+  total, su, other = describe(df)
+  name = 'Исходный'
+  print_describe(name, total, su, other)
 
-  knn = KNeighborsClassifier(n_neighbors=7)
-  knn_model = knn.fit(df_train_filtered, classes)
-  # model accuracy test
-  knn_accuracy_test_predictions = knn.predict(df_train_filtered)
-  accuracy = accuracy_score(classes, knn_accuracy_test_predictions)
-  print(f'Accuracy: {accuracy}')
+  df_accuracies, target_k = find_target_k(df)
+
+  print('Тест точности при разных значениях k (по 50 запусков)')
+  print(df_accuracies)
+  plt.plot(df_accuracies['k'], df_accuracies['accuracy'])
+  print(f'Max k is {target_k}')
+
+  train, real = get_train_and_real_data(df)
+  for name, d in (('Обучающий', train), ('Тренировочный', real)):
+    print_describe(name, d.total, d.sport_utilities, d.other) 
+
+  # contingency_table = pd.crosstab(df[column_names.ALL_WHEEL_DRIVE], df[column_names.WHEEL_BASE])
+  # print(contingency_table)
   
-  df_real_data = pd.concat([df, df_train]).drop_duplicates(keep=False)
-  df_real_data_filtered = df_real_data.filter(items=column_names.train_columns())
-  df_real_data_filtered.fillna(0, inplace=True)
-  knn_prediction = knn.predict(df_real_data_filtered)
-  df_real_data['prediction'] = knn_prediction
-  print(f'Всего данных: {len(df_real_data)}')
-  real_classes = df_real_data[column_names.SPORT_UTILITY_VEHICLE].apply(lambda v: 'SPORT_UTILITY' if v else 'OTHER')
-  accuracy = accuracy_score(real_classes, knn_prediction)
-  print(f'Точноcть на реальных данных: {accuracy}')
+  train_accuracy, real_accuracy = classify(target_k, train, real)
+
+  print(f'Точность на обучающих данных: {train_accuracy}')
+  print(f'Точноcть на тренировочных данных: {real_accuracy}')
+  plt.show()
+
+def classify(target_k, train, real):
+    df_train, train_classes = train.values, train.classes
+    df_real, real_classes = real.values, real.classes
+    knn = KNeighborsClassifier(n_neighbors=target_k)
+    knn_model = knn.fit(df_train, train_classes)
+
+    knn_accuracy_test_predictions = knn.predict(df_train)
+    train_accuracy = accuracy_score(train_classes, knn_accuracy_test_predictions)
+
+    knn_prediction = knn.predict(df_real)
+    real_accuracy = accuracy_score(real_classes, knn_prediction)
+    return train_accuracy,real_accuracy
+
+def find_target_k(df):
+    df_accuracies = pd.DataFrame(columns=('k', 'accuracy'))
+    accuracies = []
+    for k in range(5, 11):
+      temp = []
+      for _ in range(50):
+        train, real = get_train_and_real_data(df)
+        df_train, train_classes = train.values, train.classes
+        df_real, real_classes = real.values, real.classes
+        knn = KNeighborsClassifier(n_neighbors=k)
+        knn.fit(df_train, train_classes)
+        knn_accuracy_test_predictions = knn.predict(df_train)
+        temp.append(accuracy_score(train_classes, knn_accuracy_test_predictions))
+      accuracies.append(statistics.mean(temp))
+
+    train, real = get_train_and_real_data(df)
+  
+    df_accuracies['k'] = list(range(5, 11))
+    df_accuracies['accuracy'] = accuracies
+
+    idx = df_accuracies['accuracy'].idxmax()
+    target_k = df_accuracies['k'][idx]
+    return df_accuracies,target_k
+
+def print_describe(name, total, su, other):
+    print(f'Набор данных "{name}"')
+    print(f'Всего {total}')
+    print(f'Внедорожников {su} ({su / total * 100:.0f}%)')
+    print(f'Остальных {other} ({other / total * 100:.0f}%)')
+    print()
 
 
-  # print(df_real_data[df_real_data['prediction'] == 'SPORT_UTILITY'].head(50))
-  df_real_data.to_csv('output.csv', sep=';')
+def get_prediction_name(v: bool):
+  return 'SPORT_UTILITY' if v else 'OTHER'
+
+
+def describe(df: pd.DataFrame):
+  total = len(df)
+  sport_utility = len(df[df[column_names.SPORT_UTILITY_VEHICLE] == True])
+  other = total - sport_utility
+  return total, sport_utility, other
+
+
+def prepare_for_prediction(df: pd.DataFrame):
+  df = df.filter(items=column_names.train_columns())
+  df.fillna(0, inplace=True)
+  return df
+
+
+def get_train_and_real_data(df):
+  df_train_sport_utility = df[df[column_names.SPORT_UTILITY_VEHICLE] == True].sample(6)
+  df_train_other = df[df[column_names.SPORT_UTILITY_VEHICLE] == False].sample(36)
+  df_train = pd.concat([df_train_sport_utility, df_train_other])
+  total_train, su_train, other_train = describe(df_train)
+  train_classes = df_train[column_names.SPORT_UTILITY_VEHICLE].apply(get_prediction_name)
+  temp = df_train.copy()
+  df_train = prepare_for_prediction(df_train)
+  data_train = Data(df_train, train_classes, total_train, su_train, other_train)
+
+  df_real = pd.concat([df, temp]).drop_duplicates(keep=False)
+  total_real, su_real, other_real = describe(df_real)
+  real_classes = df_real[column_names.SPORT_UTILITY_VEHICLE].apply(get_prediction_name)
+  df_real = prepare_for_prediction(df_real)
+  data_real = Data(df_real, real_classes, total_real, su_real, other_real)
+
+  return data_train, data_real
 
 
 def get_data():
