@@ -1,3 +1,4 @@
+from cmath import isnan
 from art import tprint
 import pandas as pd
 from enum import StrEnum
@@ -6,6 +7,8 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 from dataclasses import dataclass
 import statistics
+import my_module__stat as stat_utils
+
 
 
 TITLE = 'Lab 3'
@@ -54,14 +57,92 @@ class column_names(StrEnum):
 @dataclass
 class Data:
   values: pd.DataFrame
+  full_values: pd.DataFrame
   classes: pd.DataFrame
   total: int
   sport_utilities: int
   other: int
 
 
+def engine_size_transform_func(engine_size):
+  engine_size_dict = {
+    'small': 1.7,
+    'medium': 3.5,
+    'large': 100
+  }
+  size_scale = list(engine_size_dict.values())
+  if not engine_size or isnan(engine_size):
+    result = None
+  else:
+    for i, elem in enumerate(size_scale):
+      if abs(engine_size) <= elem:
+        result = list(engine_size_dict.keys())[i]
+        break
+  return result
+
+
+def wheel_base_transform_func(wheel_base_inch):
+  wheel_base_dict_mm = {
+    'A-class': 2380,
+    'B-class': 2500,
+    'C-class': 2700,
+    'D-class': 2850,
+    'E-class': 2950,
+    'F-class': 10000
+  }
+  size_scale = list(wheel_base_dict_mm.values())
+  if not wheel_base_inch or isnan(wheel_base_inch):
+    result = None
+  else:
+    wheel_base_mm = wheel_base_inch * 25.4
+    for i, elem in enumerate(size_scale):
+      if abs(wheel_base_mm) <= elem:
+        result = list(wheel_base_dict_mm.keys())[i]
+        break
+  return result
+
+
+def horse_power_transform_func(horse_power):
+  horse_power_dict = {
+    'A-class': 100,
+    'B-class': 150,
+    'C-class': 200,
+    'D-class': 250,
+    'E-class': 10_000
+  }
+  size_scale = list(horse_power_dict.values())
+  if not horse_power or isnan(horse_power):
+    result = None
+  else:
+    for i, elem in enumerate(size_scale):
+      if abs(horse_power) <= elem:
+        result = list(horse_power_dict.keys())[i]
+        break
+  return result
+
+
+def weight_transform_func(weight):
+  weight_dict = {
+    'mini': 1999,
+    'light': 2499,
+    'compact': 2999,
+    'medium': 3499,
+    'heavy (suv, pickup)': 100_000
+  }
+  size_scale = list(weight_dict.values())
+  if not weight or isnan(weight):
+    result = None
+  else:
+    for i, elem in enumerate(size_scale):
+      if abs(weight) <= elem:
+        result = list(weight_dict.keys())[i]
+        break
+  return result
+
+
 def main():
   df = get_data()
+  
   total, su, other = describe(df)
   name = 'Исходный'
   print_describe(name, total, su, other)
@@ -71,9 +152,11 @@ def main():
   print('Тест точности при разных значениях k (по 50 запусков)')
   print(df_accuracies)
   plt.plot(df_accuracies['k'], df_accuracies['accuracy'])
-  print(f'Max k is {target_k}')
+  plt.savefig('accuracies.png')
+  plt.show()
 
   train, real = get_train_and_real_data(df)
+  contingency_analyze(real.full_values)
   for name, d in (('Обучающий', train), ('Тренировочный', real)):
     print_describe(name, d.total, d.sport_utilities, d.other) 
 
@@ -84,7 +167,39 @@ def main():
 
   print(f'Точность на обучающих данных: {train_accuracy}')
   print(f'Точноcть на тренировочных данных: {real_accuracy}')
-  plt.show()
+
+def contingency_analyze(df):
+  working_df = df.copy()
+  working_df['Engine size category'] = working_df[column_names.ENGINE_SIZE].apply(engine_size_transform_func)
+  working_df['Wheel base classes'] = working_df[column_names.WHEEL_BASE].apply(wheel_base_transform_func)
+  working_df['Horse power classes'] = working_df[column_names.HORSEPOWER].apply(horse_power_transform_func)
+  working_df['Weight classes'] = working_df[column_names.WEIGHT].apply(weight_transform_func)
+
+  temp = (
+    ('Engine size category', 'Связь размера двигателя и типа автомобиля', 'engine_size_type.png'),
+    (column_names.ALL_WHEEL_DRIVE, 'Связь полноприводности и типа автомобиля', 'all_wheel_type.png'),
+    ('Wheel base classes', 'Связь колёсной базы и типа автомобиля', 'wheel_base_type.png'),
+    (column_names.NUMBER_OF_CYLINDERS, 'Связь количества цилиндров и типа автомобиля', 'cylinders_type.png'),
+    ('Horse power classes', 'Связь лошадиных сил и типа автомобиля', 'horsepower_type.png'),
+    ('Weight classes', 'Связь веса и типа автомобиля', 'weight_type.png'),
+  )
+
+  for columns, title_figure, file_name in temp:
+    temp_df = working_df.pivot_table(
+      values=column_names.VEHICLE_NAME,
+      index=column_names.SPORT_UTILITY_VEHICLE,
+      columns=columns,
+      aggfunc='count',
+      fill_value=0,
+      margins=True
+    )
+
+    stat_utils.graph_contingency_tables_heatmap(
+      data_df_in=temp_df,
+      title_figure=title_figure,
+      file_name=file_name
+    )
+
 
 def classify(target_k, train, real):
     df_train, train_classes = train.values, train.classes
@@ -107,7 +222,6 @@ def find_target_k(df):
       for _ in range(50):
         train, real = get_train_and_real_data(df)
         df_train, train_classes = train.values, train.classes
-        df_real, real_classes = real.values, real.classes
         knn = KNeighborsClassifier(n_neighbors=k)
         knn.fit(df_train, train_classes)
         knn_accuracy_test_predictions = knn.predict(df_train)
@@ -149,20 +263,20 @@ def prepare_for_prediction(df: pd.DataFrame):
 
 
 def get_train_and_real_data(df):
-  df_train_sport_utility = df[df[column_names.SPORT_UTILITY_VEHICLE] == True].sample(6)
-  df_train_other = df[df[column_names.SPORT_UTILITY_VEHICLE] == False].sample(36)
+  df_train_sport_utility = df[df[column_names.SPORT_UTILITY_VEHICLE] == True].sample(12)
+  df_train_other = df[df[column_names.SPORT_UTILITY_VEHICLE] == False].sample(72)
   df_train = pd.concat([df_train_sport_utility, df_train_other])
   total_train, su_train, other_train = describe(df_train)
   train_classes = df_train[column_names.SPORT_UTILITY_VEHICLE].apply(get_prediction_name)
   temp = df_train.copy()
-  df_train = prepare_for_prediction(df_train)
-  data_train = Data(df_train, train_classes, total_train, su_train, other_train)
+  df_train_prepared = prepare_for_prediction(df_train)
+  data_train = Data(df_train_prepared, df_train, train_classes, total_train, su_train, other_train)
 
   df_real = pd.concat([df, temp]).drop_duplicates(keep=False)
   total_real, su_real, other_real = describe(df_real)
   real_classes = df_real[column_names.SPORT_UTILITY_VEHICLE].apply(get_prediction_name)
-  df_real = prepare_for_prediction(df_real)
-  data_real = Data(df_real, real_classes, total_real, su_real, other_real)
+  df_real_prepared = prepare_for_prediction(df_real)
+  data_real = Data(df_real_prepared, df_real, real_classes, total_real, su_real, other_real)
 
   return data_train, data_real
 
