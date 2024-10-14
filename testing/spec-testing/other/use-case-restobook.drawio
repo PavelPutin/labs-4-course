@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="UieqdjIPLJYyIETxDKCM">
-    <mxGraphModel dx="1893" dy="1160" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="1" shadow="0">
+    <mxGraphModel dx="1420" dy="870" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -98,7 +98,7 @@
           <mxGeometry x="650" y="842" width="150" height="100" as="geometry" />
         </mxCell>
         <mxCell id="YbhAL_LKIzu4V9cOKkYo-28" value="Посмотреть&amp;nbsp;очередь брони по всем столам" style="ellipse;whiteSpace=wrap;html=1;flipH=1;" parent="1" vertex="1">
-          <mxGeometry x="490" y="780" width="160" height="80" as="geometry" />
+          <mxGeometry x="470" y="750" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="YbhAL_LKIzu4V9cOKkYo-29" value="Посмотреть очередь брони конкретного стола" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="645" y="968" width="150" height="80" as="geometry" />
@@ -172,89 +172,99 @@
             <mxPoint x="430" y="760" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-1" value="&lt;span style=&quot;font-size:11.0pt;line-height:107%;&lt;br/&gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&lt;br/&gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&lt;br/&gt;mso-ligatures:none;mso-ansi-language:RU;mso-fareast-language:EN-US;mso-bidi-language:&lt;br/&gt;AR-SA&quot;&gt;Не аутентифицированный&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size:11.0pt;line-height:107%;&lt;br/&gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&lt;br/&gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&lt;br/&gt;mso-ligatures:none;mso-ansi-language:RU;mso-fareast-language:EN-US;mso-bidi-language:&lt;br/&gt;AR-SA&quot;&gt;пользователь&lt;/span&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-1" value="&lt;span style=&quot;font-size:11.0pt;line-height:107%;&lt;br/&gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&lt;br/&gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&lt;br/&gt;mso-ligatures:none;mso-ansi-language:RU;mso-fareast-language:EN-US;mso-bidi-language:&lt;br/&gt;AR-SA&quot;&gt;Не аутентифицированный&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size:11.0pt;line-height:107%;&lt;br/&gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&lt;br/&gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&lt;br/&gt;mso-ligatures:none;mso-ansi-language:RU;mso-fareast-language:EN-US;mso-bidi-language:&lt;br/&gt;AR-SA&quot;&gt;пользователь&lt;/span&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="380" y="330" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-3" value="Войти в приложение" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-3" value="Войти в приложение" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="262" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-4" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="u-8w5CSnCzMtnnhmVk6F-3" target="u-8w5CSnCzMtnnhmVk6F-1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-4" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="u-8w5CSnCzMtnnhmVk6F-3" target="u-8w5CSnCzMtnnhmVk6F-1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="496.5" y="250" as="sourcePoint" />
             <mxPoint x="546.5" y="200" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-5" value="Подать заявку на регистрацию ресторана" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-5" value="Подать заявку на регистрацию ресторана" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="680" y="272" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-6" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="u-8w5CSnCzMtnnhmVk6F-1" target="u-8w5CSnCzMtnnhmVk6F-5">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-6" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="u-8w5CSnCzMtnnhmVk6F-1" target="u-8w5CSnCzMtnnhmVk6F-5" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="546.5" y="240" as="sourcePoint" />
             <mxPoint x="596.5" y="190" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-8" value="Выйти из учётной записи" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-8" value="Выйти из учётной записи" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="842" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-9" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="u-8w5CSnCzMtnnhmVk6F-8" target="YbhAL_LKIzu4V9cOKkYo-22">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-9" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="u-8w5CSnCzMtnnhmVk6F-8" target="YbhAL_LKIzu4V9cOKkYo-22" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="310" y="924" as="sourcePoint" />
             <mxPoint x="360" y="874" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-10" value="Посмотреть обзорную информацию о зарегистрированных ресторанах" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-10" value="Посмотреть обзорную информацию о зарегистрированных ресторанах" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="620" y="30" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-11" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="YbhAL_LKIzu4V9cOKkYo-1" target="u-8w5CSnCzMtnnhmVk6F-10">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-11" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="YbhAL_LKIzu4V9cOKkYo-1" target="u-8w5CSnCzMtnnhmVk6F-10" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="360" y="150" as="sourcePoint" />
             <mxPoint x="410" y="100" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-15" value="Выйти из учётной записи" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-15" value="Выйти из учётной записи" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="30" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="u-8w5CSnCzMtnnhmVk6F-15" target="YbhAL_LKIzu4V9cOKkYo-1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-16" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="u-8w5CSnCzMtnnhmVk6F-15" target="YbhAL_LKIzu4V9cOKkYo-1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="400" y="150" as="sourcePoint" />
             <mxPoint x="450" y="100" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-17" value="Удалить выбранный ресторан" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-17" value="Удалить выбранный ресторан" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="257" y="30" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-18" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="u-8w5CSnCzMtnnhmVk6F-17" target="YbhAL_LKIzu4V9cOKkYo-1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-18" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="u-8w5CSnCzMtnnhmVk6F-17" target="YbhAL_LKIzu4V9cOKkYo-1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="460" y="150" as="sourcePoint" />
             <mxPoint x="510" y="100" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-19" value="Редактировать информацию о ресторане" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-19" value="Редактировать информацию о ресторане" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="453" y="30" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-20" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="YbhAL_LKIzu4V9cOKkYo-1" target="u-8w5CSnCzMtnnhmVk6F-19">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-20" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="YbhAL_LKIzu4V9cOKkYo-1" target="u-8w5CSnCzMtnnhmVk6F-19" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="590" y="30" as="sourcePoint" />
             <mxPoint x="640" y="-20" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-22" value="Удалить бронь" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="680" y="736" width="120" height="80" as="geometry" />
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-22" value="Удалить бронь" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="750" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-23" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;" edge="1" parent="1" source="u-8w5CSnCzMtnnhmVk6F-22" target="YbhAL_LKIzu4V9cOKkYo-9">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-23" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;" parent="1" source="u-8w5CSnCzMtnnhmVk6F-22" target="YbhAL_LKIzu4V9cOKkYo-22" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="-120" y="730" as="sourcePoint" />
             <mxPoint x="-40" y="730" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-24" value="Удалить стол" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-24" value="Удалить стол" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="690" y="514" width="110" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="u-8w5CSnCzMtnnhmVk6F-25" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;" edge="1" parent="1" source="YbhAL_LKIzu4V9cOKkYo-9" target="u-8w5CSnCzMtnnhmVk6F-24">
+        <mxCell id="u-8w5CSnCzMtnnhmVk6F-25" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;" parent="1" source="YbhAL_LKIzu4V9cOKkYo-9" target="u-8w5CSnCzMtnnhmVk6F-24" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="840" y="400" as="sourcePoint" />
             <mxPoint x="920" y="400" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="U9ny5xGw-a-JuOa6KNa0-1" value="Удалить учётную запись сотрудника" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="210" y="746" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="U9ny5xGw-a-JuOa6KNa0-2" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;" parent="1" source="U9ny5xGw-a-JuOa6KNa0-1" target="YbhAL_LKIzu4V9cOKkYo-9" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="300" y="680" as="sourcePoint" />
+            <mxPoint x="380" y="680" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
