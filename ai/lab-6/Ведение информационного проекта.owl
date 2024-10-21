@@ -1,0 +1,669 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.owl-ontologies.com/Ontology1729364819.owl#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.owl-ontologies.com/Ontology1729364819.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Проект">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Проект</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Деятельность, направленная на создание некоторой информационной системы</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Претензия_заказчика">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Претензия заказчика</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Краткое описание претензии заказчика к текущему состоянию билда</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Выполнение_проекта">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Выполнение проекта</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Процесс выполнения проекта по созданию информационной системы</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Тестировщик">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Член_команды_разработки"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Человек, ответственный за обеспечение контроля качества продукта</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Тестировщик</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#Член_команды_разработки">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Член команды разработки</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Сотрудник компании-исполнителя</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Заказчик">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Заказчик</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Компания"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Компания, которая хочет заказать выполнение проекта</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Этап">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Этап</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Определённый период в модели ЖЦ</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Компания">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Компания</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Юридическое лицо</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Аналитик">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Аналитик</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Член_команды_разработки"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Человек, ответственный за анализ предметной области проекта и составление требований</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Исполнитель">
+    <rdfs:subClassOf rdf:resource="#Компания"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Компания, готовая выполнить проект</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Исполнитель</rdfs:label>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+      <owl:Class rdf:about="#Претензия_заказчика"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Менеджер">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Менеджер</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Человек, ответственный за контроль выполнения проекта и координацию работы членов команды</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Член_команды_разработки"/>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+      <owl:Class rdf:about="#Претензия_заказчика"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Модель_ЖЦ">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Модель ЖЦ</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Подход к построению процесса выполнения проекта</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Программист">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Программист</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Член_команды_разработки"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Человек, ответственный за разработку продукта</rdfs:comment>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+      <owl:Class rdf:about="#Претензия_заказчика"/>
+      <owl:Class rdf:about="#Выполнение_проекта"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="зависит_от_других_этапов">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Этап"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >зависит от других этапов</rdfs:label>
+    <rdfs:range rdf:resource="#Этап"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="перечень_претензий">
+    <rdfs:range rdf:resource="#Претензия_заказчика"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Выполнение_проекта"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >перечень претензий</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="команда_разработчиков">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Исполнитель"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="#Член_команды_разработки"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >команда разработчиков</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="относится_к_модели_ЖЦ">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Этап"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >относится к модели ЖЦ</rdfs:label>
+    <rdfs:range rdf:resource="#Модель_ЖЦ"/>
+  </owl:ObjectProperty>
+  <owl:FunctionalProperty rdf:ID="количество_поставок">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >количество поставок</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Модель_ЖЦ"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="бюджет__тыс._рублей_">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >бюджет (тыс. рублей)</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Проект"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="проект">
+    <rdfs:range rdf:resource="#Проект"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Выполнение_проекта"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >проект</rdfs:label>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="цель_модели">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Модель_ЖЦ"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >цель модели</rdfs:label>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="название_компании">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >название компании</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Компания"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="исполнитель_проекта">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >исполнитель проекта</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Претензия_заказчика"/>
+          <owl:Class rdf:about="#Выполнение_проекта"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#Исполнитель"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="сроки__месяцев_">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Проект"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >сроки (месяцев)</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="название_этапа">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Этап"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >название этапа</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="выполнение_проекта">
+    <rdfs:range rdf:resource="#Выполнение_проекта"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >выполнение проекта</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Претензия_заказчика"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="зарплата__руб_">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >зарплата (руб)</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Член_команды_разработки"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="Ведение_информационного_проекта_Class51">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class51</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="результат">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Этап"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >результат</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="описание_претензий">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >описание претензий</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Претензия_заказчика"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="заказчик_проекта">
+    <rdfs:range rdf:resource="#Заказчик"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >заказчик проекта</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Претензия_заказчика"/>
+          <owl:Class rdf:about="#Выполнение_проекта"/>
+          <owl:Class rdf:about="#Проект"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="название_проекта">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >название проекта</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Проект"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="опыт_работы__полных_лет_">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >опыт работы (полных лет)</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Член_команды_разработки"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="ФИО">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Член_команды_разработки"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >ФИО</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="название_модели">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >название модели</rdfs:label>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing"/>
+          <owl:Class rdf:about="#Модель_ЖЦ"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <rdf:Description rdf:about="Ведение_информационного_проекта_Class24">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class24</rdfs:label>
+    <rdf:type rdf:datatype="java:edu.stanford.smi.protege.model.DefaultCls"
+    >Cls(:PAL-CONSTRAINT)</rdf:type>
+  </rdf:Description>
+  <Проект rdf:about="Ведение_информационного_проекта_Class36">
+    <бюджет__тыс._рублей_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >100.0</бюджет__тыс._рублей_>
+    <название_проекта rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Сайт с информацией о популяции ежей в Воронежской области</название_проекта>
+    <сроки__месяцев_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >1</сроки__месяцев_>
+    <заказчик_проекта>
+      <Заказчик rdf:about="Ведение_информационного_проекта_Class29">
+        <название_компании rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >ООО «Воронежские ежи»</название_компании>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ведение информационного проекта_Class29</rdfs:label>
+      </Заказчик>
+    </заказчик_проекта>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class36</rdfs:label>
+  </Проект>
+  <Этап rdf:about="Ведение_информационного_проекта_Class48">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class48</rdfs:label>
+    <относится_к_модели_ЖЦ>
+      <Модель_ЖЦ rdf:about="Ведение_информационного_проекта_Class38">
+        <количество_поставок rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Одна</количество_поставок>
+        <цель_модели rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Управление стоимостью</цель_модели>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ведение информационного проекта_Class38</rdfs:label>
+        <название_модели rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Водопадная</название_модели>
+      </Модель_ЖЦ>
+    </относится_к_модели_ЖЦ>
+    <относится_к_модели_ЖЦ>
+      <Модель_ЖЦ rdf:about="Ведение_информационного_проекта_Class39">
+        <название_модели rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Agile</название_модели>
+        <цель_модели rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ценность для клиента через частые поставки и обратную связь</цель_модели>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ведение информационного проекта_Class39</rdfs:label>
+        <количество_поставок rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Частые небольшие поставки</количество_поставок>
+      </Модель_ЖЦ>
+    </относится_к_модели_ЖЦ>
+    <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Поддержка проекта</название_этапа>
+    <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Улучшение продукта</результат>
+    <зависит_от_других_этапов>
+      <Этап rdf:about="Ведение_информационного_проекта_Class47">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ведение информационного проекта_Class47</rdfs:label>
+        <зависит_от_других_этапов>
+          <Этап rdf:about="Ведение_информационного_проекта_Class46">
+            <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class46</rdfs:label>
+            <зависит_от_других_этапов>
+              <Этап rdf:about="Ведение_информационного_проекта_Class45">
+                <зависит_от_других_этапов>
+                  <Этап rdf:about="Ведение_информационного_проекта_Class44">
+                    <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >Реализация</название_этапа>
+                    <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+                    <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >Продукт</результат>
+                    <зависит_от_других_этапов>
+                      <Этап rdf:about="Ведение_информационного_проекта_Class43">
+                        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >Ведение информационного проекта_Class43</rdfs:label>
+                        <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >Проектирование</название_этапа>
+                        <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+                        <зависит_от_других_этапов>
+                          <Этап rdf:about="Ведение_информационного_проекта_Class41">
+                            <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+                            <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >Анализ</название_этапа>
+                            <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >Техническое задание</результат>
+                            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >Ведение информационного проекта_Class41</rdfs:label>
+                          </Этап>
+                        </зависит_от_других_этапов>
+                        <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >Детальный проект</результат>
+                      </Этап>
+                    </зависит_от_других_этапов>
+                    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >Ведение информационного проекта_Class44</rdfs:label>
+                  </Этап>
+                </зависит_от_других_этапов>
+                <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Отчёт о тестировании</результат>
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Ведение информационного проекта_Class45</rdfs:label>
+                <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Тестирование</название_этапа>
+                <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+              </Этап>
+            </зависит_от_других_этапов>
+            <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Готовый продукт</результат>
+            <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Доработка продукта</название_этапа>
+          </Этап>
+        </зависит_от_других_этапов>
+        <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+        <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class39"/>
+        <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Используемый продукт</результат>
+        <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Поставка готового продукта</название_этапа>
+      </Этап>
+    </зависит_от_других_этапов>
+  </Этап>
+  <Этап rdf:about="Ведение_информационного_проекта_Class49">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class49</rdfs:label>
+    <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Завершение работ</название_этапа>
+    <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class38"/>
+    <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class39"/>
+    <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Освобождение ресурсов</результат>
+    <зависит_от_других_этапов rdf:resource="Ведение_информационного_проекта_Class47"/>
+  </Этап>
+  <Этап rdf:about="Ведение_информационного_проекта_Class40">
+    <относится_к_модели_ЖЦ rdf:resource="Ведение_информационного_проекта_Class39"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class40</rdfs:label>
+    <название_этапа rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Спринт</название_этапа>
+    <результат rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Рабочий билд</результат>
+  </Этап>
+  <Претензия_заказчика rdf:about="Ведение_информационного_проекта_Class59">
+    <исполнитель_проекта>
+      <Исполнитель rdf:about="Ведение_информационного_проекта_Class30">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ведение информационного проекта_Class30</rdfs:label>
+        <название_компании rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >ООО «Мы делаем IT»</название_компании>
+        <команда_разработчиков>
+          <Программист rdf:about="Ведение_информационного_проекта_Class31">
+            <ФИО rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Путин Павел Александрович</ФИО>
+            <опыт_работы__полных_лет_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >0</опыт_работы__полных_лет_>
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class31</rdfs:label>
+            <зарплата__руб_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >70000.0</зарплата__руб_>
+          </Программист>
+        </команда_разработчиков>
+        <команда_разработчиков>
+          <Тестировщик rdf:about="Ведение_информационного_проекта_Class35">
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class35</rdfs:label>
+            <зарплата__руб_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >100000.0</зарплата__руб_>
+            <опыт_работы__полных_лет_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</опыт_работы__полных_лет_>
+            <ФИО rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Саков Евгений Андреевич</ФИО>
+          </Тестировщик>
+        </команда_разработчиков>
+        <команда_разработчиков>
+          <Менеджер rdf:about="Ведение_информационного_проекта_Class34">
+            <ФИО rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Сапегин Павел Александрович</ФИО>
+            <опыт_работы__полных_лет_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >2</опыт_работы__полных_лет_>
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class34</rdfs:label>
+            <зарплата__руб_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >150000.0</зарплата__руб_>
+          </Менеджер>
+        </команда_разработчиков>
+        <команда_разработчиков>
+          <Аналитик rdf:about="Ведение_информационного_проекта_Class33">
+            <зарплата__руб_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >100000.0</зарплата__руб_>
+            <ФИО rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Любченко Елизавета Андреевна</ФИО>
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class33</rdfs:label>
+            <опыт_работы__полных_лет_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</опыт_работы__полных_лет_>
+          </Аналитик>
+        </команда_разработчиков>
+        <команда_разработчиков>
+          <Программист rdf:about="Ведение_информационного_проекта_Class32">
+            <зарплата__руб_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >200000.0</зарплата__руб_>
+            <опыт_работы__полных_лет_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >2</опыт_работы__полных_лет_>
+            <ФИО rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Лысенко Артём Русланович</ФИО>
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class32</rdfs:label>
+          </Программист>
+        </команда_разработчиков>
+      </Исполнитель>
+    </исполнитель_проекта>
+    <описание_претензий rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Число ошибочных результатов больше 18%</описание_претензий>
+    <выполнение_проекта>
+      <Выполнение_проекта rdf:about="Ведение_информационного_проекта_Class58">
+        <перечень_претензий rdf:resource="Ведение_информационного_проекта_Class59"/>
+        <заказчик_проекта>
+          <Заказчик rdf:about="Ведение_информационного_проекта_Class28">
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class28</rdfs:label>
+            <название_компании rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >ОАО «Ёж-патруль»</название_компании>
+          </Заказчик>
+        </заказчик_проекта>
+        <исполнитель_проекта rdf:resource="Ведение_информационного_проекта_Class30"/>
+        <проект>
+          <Проект rdf:about="Ведение_информационного_проекта_Class37">
+            <название_проекта rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Приложение для идентификации ежей по биометрии и возможностью определения эмоционального состояния ёжиков</название_проекта>
+            <заказчик_проекта rdf:resource="Ведение_информационного_проекта_Class28"/>
+            <бюджет__тыс._рублей_ rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >100000.0</бюджет__тыс._рублей_>
+            <сроки__месяцев_ rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >12</сроки__месяцев_>
+            <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ведение информационного проекта_Class37</rdfs:label>
+          </Проект>
+        </проект>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Ведение информационного проекта_Class58</rdfs:label>
+      </Выполнение_проекта>
+    </выполнение_проекта>
+    <заказчик_проекта rdf:resource="Ведение_информационного_проекта_Class28"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ведение информационного проекта_Class59</rdfs:label>
+  </Претензия_заказчика>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
