@@ -56,10 +56,10 @@ for i = 1 : M - 1 % цикл по парам классов (как в 4й лабе с 3м€ буквами)
         D = [true(Ks(i), 1); false(Ks(j), 1)]; % метки классов
         
         % ¬ар. а)  лассификатор дл€ линейно разделимых данных (раздел€юща€ граница - пр€ма€)
-        svm_strs{i, j} = fitcsvm(Xij, D, 'Solver', 'L1QP', 'KernelFunction', 'linear', 'BoxConstraint', r);
+        % svm_strs{i, j} = fitcsvm(Xij, D, 'Solver', 'L1QP', 'KernelFunction', 'linear', 'BoxConstraint', r);
 
         % ¬ар. б)  лассификатор дл€ линейно неразделимых данных (раздел€юща€ граница - крива€)
-        % svm_strs{i, j} = fitcsvm(Xij, D, 'Solver', 'L1QP', 'KernelFunction', 'polynomial', 'PolynomialOrder', 4);
+        svm_strs{i, j} = fitcsvm(Xij, D, 'Solver', 'L1QP', 'KernelFunction', 'polynomial', 'PolynomialOrder', 4);
 
         % ƒругие варианты Kernel_Function и еЄ параметров (смотри файл fitcsvm.m) 
         % svm_strs{i, j} = fitcsvm(Xij, D, 'Solver', 'L1QP', 'KernelFunction', 'rbf', 'KernelScale', 1);
