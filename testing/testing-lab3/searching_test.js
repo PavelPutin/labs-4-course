@@ -14,3 +14,10 @@ Scenario('Поиск товара по артикулу (товар сущест
     I.see('1 продукт')
   });
 });
+
+Scenario('Поиск товара по названию (товар не существует)', async ({ I, searchingPage }) => {
+  const searchQuery = 'абракадабра';
+  searchingPage.searchOnSite(searchQuery, () => {
+    I.see('Ничего не найдено. Попробуйте изменить запрос и мы поищем ещё раз.');
+  });
+});
