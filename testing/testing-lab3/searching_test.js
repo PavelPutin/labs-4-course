@@ -17,7 +17,17 @@ Scenario('Поиск товара по артикулу (товар сущест
 
 Scenario('Поиск товара по названию (товар не существует)', async ({ I, searchingPage }) => {
   const searchQuery = 'абракадабра';
-  searchingPage.searchOnSite(searchQuery, () => {
-    I.see('Ничего не найдено. Попробуйте изменить запрос и мы поищем ещё раз.');
-  });
+  searchingPage.searchMissingOnSite(searchQuery);
+});
+
+Scenario('Поиск товара по артикулу (товар не существует)', async ({ I, searchingPage }) => {
+  const searchQuery = '39000164782';
+  searchingPage.searchMissingOnSite(searchQuery);
+});
+
+Scenario('Недоступность кнопки отправки поискового запроса', async ({ I, searchingPage }) => {
+  I.amOnPage('/');
+  I.waitForNavigation();
+  I.click(searchingPage.locators.openButton);
+  I.seeElementInDOM(searchingPage.locators.submitButtonDisabled);
 });

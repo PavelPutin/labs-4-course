@@ -9,8 +9,13 @@ module.exports = {
     submitButton: locate('button')
       .withAttr({ type: 'submit' })
       .withClassAttr('WsiT3 YvLEA l8SKP'),
+    submitButtonDisabled: locate('button')
+      .withAttr({ type: 'submit', disabled: 'disabled' })
+      .withClassAttr('WsiT3 YvLEA l8SKP'),
     resultLabel: locate('span')
-      .withClassAttr('YYut9')
+      .withClassAttr('YYut9'),
+    resultProductCard: locate('div')
+      .withClassAttr('GELM+')
   },
 
   searchOnSite(query, callback) {
@@ -27,5 +32,12 @@ module.exports = {
     // check search requests history contains query
     I.click(this.locators.openButton);
     I.see(query);
+  },
+
+  searchMissingOnSite(query) {
+    this.searchOnSite(query, () => {
+      I.see('Ничего не найдено. Попробуйте изменить запрос и мы поищем ещё раз.');
+      I.dontSeeElementInDOM(this.locators.resultProductCard);
+    });
   }
 }
