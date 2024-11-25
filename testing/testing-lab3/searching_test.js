@@ -10,8 +10,8 @@ Scenario('Поиск товара по названию (товар сущест
 Scenario('Поиск товара по артикулу (товар существует)', async ({ I, searchingPage }) => {
   const searchQuery = '19000164782';
   searchingPage.searchOnSite(searchQuery, () => {
-    I.see('ANASTASIA BEVERLY HILLS', searchingPage.locators. resultLabelCSSClass);
-    I.see('1 продукт')
+    I.see('ANASTASIA BEVERLY HILLS', searchingPage.locators.resultLabelCSSClass);
+    I.see('1 продукт');
   });
 });
 
@@ -30,4 +30,11 @@ Scenario('Недоступность кнопки отправки поиско�
   I.waitForNavigation();
   I.click(searchingPage.locators.openButton);
   I.seeElementInDOM(searchingPage.locators.submitButtonDisabled);
+});
+
+Scenario('Поиск по названию бренда', async ({ I, searchingPage }) => {
+  const searchQuery = 'anastasia beverly hills';
+  searchingPage.searchOnSite(searchQuery, () => {
+    I.see('anastasia beverly hills', searchingPage.locators.resultLabelCSSClass);
+  });
 });

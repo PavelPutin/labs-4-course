@@ -4,16 +4,21 @@ module.exports = {
   locators: {
     openButton: locate('button')
       .withClassAttr('ga-header__tab_type_search'),
+      
     input: locate('input')
       .withAttr({ placeholder: 'хочу купить' }),
+
     submitButton: locate('button')
       .withAttr({ type: 'submit' })
       .withClassAttr('WsiT3 YvLEA l8SKP'),
+
     submitButtonDisabled: locate('button')
       .withAttr({ type: 'submit', disabled: 'disabled' })
       .withClassAttr('WsiT3 YvLEA l8SKP'),
+
     resultLabel: locate('span')
       .withClassAttr('YYut9'),
+
     resultProductCard: locate('div')
       .withClassAttr('GELM+')
   },
