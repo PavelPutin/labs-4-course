@@ -9,7 +9,7 @@ exports.config = {
       restart: false,
       windowSize: '1920x1080',
       waitForNavigation: ['domcontentloaded', 'networkidle2'],
-      waitForAction: 750
+      waitForAction: 1000
     }
   },
   include: {
