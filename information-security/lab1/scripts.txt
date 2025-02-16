@@ -1,0 +1,3 @@
+py main.py key encode file        
+py main.py key decode file.encoded 
+py main.py key2 decode file.encoded
