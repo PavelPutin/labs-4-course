@@ -1,0 +1,412 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Провести стратегическое и тактическое планирование модельного эксперимента.</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-02-22">
+<meta name="DC.source" content="lab1.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Провести стратегическое и тактическое планирование модельного эксперимента.</h1>
+<!--introduction-->
+<p>Выходной реакцией системы является случайная величина, распределенная по закону распределения Коши. Факторами являются параметры: b ϵ (6, 7); a ϵ (4, 5). Оценить показатель эффективности вероятность исхода реакции системы &lt; 5. Доверительный интервал d = 0.3 с уровнем значимости ɑ = 0.01.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">1. Задание исходных данных</a>
+</li>
+<li>
+<a href="#2">2. Формирование дробного двухуровневого плана эксперимента для учета взаимодействий</a>
+</li>
+<li>
+<a href="#3">3. Тактическое планирование эксперимента</a>
+</li>
+<li>
+<a href="#4">4. Формирование зависимости реакции системы на множестве реальных значений факторов</a>
+</li>
+<li>
+<a href="#5">5. Отображение зависимостей в трехмерной графике</a>
+</li>
+</ul>
+</div>
+<h2 id="1">1. Задание исходных данных</h2>
+<pre class="codeinput">
+<span class="comment">% очистка рабочего пространства</span>
+clear <span class="string">all</span>;
+<span class="comment">% задание количества факторов</span>
+nf = 2;
+<span class="comment">% минимальные значения диапазонов</span>
+minf = [4 6];
+<span class="comment">% максимальные значения диапазонов</span>
+maxf = [5 7];
+</pre>
+<h2 id="2">2. Формирование дробного двухуровневого плана эксперимента для учета взаимодействий</h2>
+<pre class="codeinput">
+<span class="comment">% количество экспериментов</span>
+N = 2 ^ nf;
+<span class="comment">% генерация плана эксперимента</span>
+fracfact(<span class="string">'a b ab'</span>);
+<span class="comment">% сохранение плана эксперимента</span>
+fracplan = ans
+<span class="comment">% фиктивный фактор</span>
+fictfact = ones(N, 1);
+<span class="comment">% добавление фиктивного фактора в план</span>
+X = [fictfact ans]'
+<span class="comment">% массив для хранения матрицы значений</span>
+fraceks = zeros(N, nf);
+<span class="comment">% цикл по факторам</span>
+<span class="keyword">for</span> i = 1 : nf
+    <span class="comment">% цикл по совокупности экспериментов стратегического плана</span>
+    <span class="keyword">for</span> j = 1 : N
+        <span class="comment">% генерация матрицы значений плана</span>
+        fraceks(j, i) = minf(i) + (fracplan(j, i) + 1) * (maxf(i) - minf(i)) / 2;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% вывод матрицы значений</span>
+fraceks
+</pre>
+<pre class="codeoutput">
+fracplan =
+
+    -1    -1     1
+    -1     1    -1
+     1    -1    -1
+     1     1     1
+
+
+X =
+
+     1     1     1     1
+    -1    -1     1     1
+    -1     1    -1     1
+     1    -1    -1     1
+
+
+fraceks =
+
+     4     6
+     4     7
+     5     6
+     5     7
+
+</pre>
+<h2 id="3">3. Тактическое планирование эксперимента</h2>
+<pre class="codeinput">
+<span class="comment">% задание доверительного интервала</span>
+d_sigma = 0.3;
+<span class="comment">% задание уровня значимости</span>
+alpha = 0.01;
+<span class="comment">% определение t-критического</span>
+tkr_alpha = norminv(1 - alpha / 2);
+<span class="comment">% определение требуемого числа испытаний</span>
+NE = round(tkr_alpha ^ 2 / (4 * d_sigma ^ 2))
+<span class="comment">% цикл по совокупности экспериментов стратегического плана</span>
+<span class="keyword">for</span> j = 1 : N
+    <span class="comment">% значение фактора a в эксперименте j</span>
+    a = fraceks(j, 1);
+    <span class="comment">% значение фактора b в эксперименте j</span>
+    b = fraceks(j, 2);
+    <span class="comment">% цикл статистических испытаний</span>
+    <span class="keyword">for</span> k = 1 : NE
+        <span class="comment">% имитация функционирования системы</span>
+        u(k) = systemeqv(a, b);
+    <span class="keyword">end</span>
+    <span class="comment">% оценка параметров (реакции) по выборке наблюдений</span>
+
+    <span class="comment">% среднее значение</span>
+    mx = mean(u);
+    <span class="comment">% дисперсия</span>
+    DX = std(u) ^ 2;
+
+    <span class="comment">% расчёт вероятности, что значение исхода реакции системы &lt; 5</span>
+
+    <span class="comment">% счётчик значений &lt; 5</span>
+    s = 0;
+    <span class="comment">% цикл по исходам</span>
+    <span class="keyword">for</span> k = 1 : NE
+        <span class="comment">% отбираем подходящие под условие исходы</span>
+        <span class="keyword">if</span> u(k) &lt; 5
+            <span class="comment">% увеличиваем счётчик</span>
+            s = s + 1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="comment">% находим вероятность, что значение исхода реакции системы &lt; 5</span>
+    Y(j) = s / NE;
+    <span class="comment">% формирование и отображение гистограммы с 12-ю интервалами</span>
+    figure; histogram(u, 12);
+<span class="keyword">end</span>
+<span class="comment">% расчёт вспомогательной матрицы</span>
+C = X * X';
+<span class="comment">% коэффициенты регрессии</span>
+b_ = inv(C) * X * Y'
+</pre>
+<pre class="codeoutput">
+NE =
+
+    18
+
+
+b_ =
+
+    0.8889
+   -0.0278
+    0.0278
+   -0.0000
+
+</pre>
+<img vspace="5" hspace="5" src="lab1_01.png" alt=""> <img vspace="5" hspace="5" src="lab1_02.png" alt=""> <img vspace="5" hspace="5" src="lab1_03.png" alt=""> <img vspace="5" hspace="5" src="lab1_04.png" alt=""> <h2 id="4">4. Формирование зависимости реакции системы на множестве реальных значений факторов</h2>
+<pre class="codeinput">
+<span class="comment">% значения фактора A с шагом 0.1</span>
+A = minf(1) : 0.1 : maxf(1);
+<span class="comment">% значения фактора B с шагом 0.1</span>
+B = minf(2) : 0.1 : maxf(2);
+<span class="comment">% количество значений фактора A</span>
+[k, N1] = size(A);
+<span class="comment">% количество значений фактора B</span>
+[k, N2] = size(B);
+<span class="comment">% цикл по значениям фактора A</span>
+<span class="keyword">for</span> i = 1 : N1
+    <span class="comment">% цикл по значениям фактора B</span>
+    <span class="keyword">for</span> j = 1 : N2
+        <span class="comment">% значения фактора A в масштабе от -1 до 1</span>
+        an(i) = 2 * (A(i) - minf(1)) / (maxf(1) - minf(1)) - 1;
+        <span class="comment">% значения фактора B в масштабе от -1 до 1</span>
+        bn(j) = 2 * (B(j) - minf(2)) / (maxf(2) - minf(2)) - 1;
+        <span class="comment">% экспериментальная поверхность реакции</span>
+        Yc(j, i) = b_(1) + an(i) * b_(2) + bn(j) * b_(3) + an(i) * bn(j) * b_(4);
+        <span class="comment">% теоретическая поверхность реакции</span>
+        Yo(j, i) = 1 / pi * atan((5 - A(i)) / B(j)) + 0.5;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+<h2 id="5">5. Отображение зависимостей в трехмерной графике</h2>
+<pre class="codeinput">[x, y] = meshgrid(A, B);
+figure;
+subplot(1, 2, 1), plot3(x, y, Yc),
+xlabel(<span class="string">'fact a'</span>),
+ylabel(<span class="string">'fact b'</span>),
+zlabel(<span class="string">'Yc'</span>),
+title(<span class="string">'System output'</span>),
+grid <span class="string">on</span>,
+subplot(1, 2, 2), plot3(x, y, Yo),
+xlabel(<span class="string">'fact a'</span>),
+ylabel(<span class="string">'fact b'</span>),
+zlabel(<span class="string">'Yo'</span>),
+title(<span class="string">'System output'</span>),
+grid <span class="string">on</span>;
+</pre>
+<img vspace="5" hspace="5" src="lab1_05.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Провести стратегическое и тактическое планирование модельного эксперимента.
+% Выходной реакцией системы является случайная величина, распределенная по закону распределения Коши.
+% Факторами являются параметры: b ϵ (6, 7); a ϵ (4, 5).
+% Оценить показатель эффективности вероятность исхода реакции системы < 5.
+% Доверительный интервал d = 0.3 с уровнем значимости ɑ = 0.01.
+
+%% 1. Задание исходных данных
+
+% очистка рабочего пространства
+clear all;
+% задание количества факторов
+nf = 2;
+% минимальные значения диапазонов
+minf = [4 6];
+% максимальные значения диапазонов
+maxf = [5 7];
+
+%% 2. Формирование дробного двухуровневого плана эксперимента для учета взаимодействий
+
+% количество экспериментов
+N = 2 ^ nf;
+% генерация плана эксперимента
+fracfact('a b ab');
+% сохранение плана эксперимента
+fracplan = ans
+% фиктивный фактор
+fictfact = ones(N, 1);
+% добавление фиктивного фактора в план
+X = [fictfact ans]'
+% массив для хранения матрицы значений
+fraceks = zeros(N, nf);
+% цикл по факторам
+for i = 1 : nf
+    % цикл по совокупности экспериментов стратегического плана
+    for j = 1 : N
+        % генерация матрицы значений плана
+        fraceks(j, i) = minf(i) + (fracplan(j, i) + 1) * (maxf(i) - minf(i)) / 2;
+    end
+end
+% вывод матрицы значений
+fraceks
+
+%% 3. Тактическое планирование эксперимента
+
+% задание доверительного интервала
+d_sigma = 0.3;
+% задание уровня значимости
+alpha = 0.01;
+% определение t-критического
+tkr_alpha = norminv(1 - alpha / 2);
+% определение требуемого числа испытаний
+NE = round(tkr_alpha ^ 2 / (4 * d_sigma ^ 2))
+% цикл по совокупности экспериментов стратегического плана
+for j = 1 : N
+    % значение фактора a в эксперименте j
+    a = fraceks(j, 1);
+    % значение фактора b в эксперименте j
+    b = fraceks(j, 2);
+    % цикл статистических испытаний
+    for k = 1 : NE
+        % имитация функционирования системы
+        u(k) = systemeqv(a, b);
+    end
+    % оценка параметров (реакции) по выборке наблюдений
+
+    % среднее значение
+    mx = mean(u);
+    % дисперсия
+    DX = std(u) ^ 2;
+
+    % расчёт вероятности, что значение исхода реакции системы < 5
+
+    % счётчик значений < 5
+    s = 0;
+    % цикл по исходам
+    for k = 1 : NE
+        % отбираем подходящие под условие исходы
+        if u(k) < 5
+            % увеличиваем счётчик
+            s = s + 1;
+        end
+    end
+    % находим вероятность, что значение исхода реакции системы < 5
+    Y(j) = s / NE;
+    % формирование и отображение гистограммы с 12-ю интервалами
+    figure; histogram(u, 12);
+end
+% расчёт вспомогательной матрицы
+C = X * X';
+% коэффициенты регрессии
+b_ = inv(C) * X * Y'
+
+%% 4. Формирование зависимости реакции системы на множестве реальных значений факторов
+
+% значения фактора A с шагом 0.1
+A = minf(1) : 0.1 : maxf(1);
+% значения фактора B с шагом 0.1
+B = minf(2) : 0.1 : maxf(2);
+% количество значений фактора A
+[k, N1] = size(A);
+% количество значений фактора B
+[k, N2] = size(B);
+% цикл по значениям фактора A
+for i = 1 : N1
+    % цикл по значениям фактора B
+    for j = 1 : N2
+        % значения фактора A в масштабе от -1 до 1
+        an(i) = 2 * (A(i) - minf(1)) / (maxf(1) - minf(1)) - 1;
+        % значения фактора B в масштабе от -1 до 1
+        bn(j) = 2 * (B(j) - minf(2)) / (maxf(2) - minf(2)) - 1;
+        % экспериментальная поверхность реакции
+        Yc(j, i) = b_(1) + an(i) * b_(2) + bn(j) * b_(3) + an(i) * bn(j) * b_(4);
+        % теоретическая поверхность реакции
+        Yo(j, i) = 1 / pi * atan((5 - A(i)) / B(j)) + 0.5;
+    end
+end
+%% 5. Отображение зависимостей в трехмерной графике
+
+[x, y] = meshgrid(A, B);
+figure;
+subplot(1, 2, 1), plot3(x, y, Yc),
+xlabel('fact a'),
+ylabel('fact b'),
+zlabel('Yc'),
+title('System output'),
+grid on,
+subplot(1, 2, 2), plot3(x, y, Yo),
+xlabel('fact a'),
+ylabel('fact b'),
+zlabel('Yo'),
+title('System output'),
+grid on;
+##### SOURCE END #####
+-->
+</body>
+</html>
