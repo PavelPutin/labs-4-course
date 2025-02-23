@@ -1,6 +1,6 @@
 import logging
 import sys
-from encryption.algos import ECB
+from encryption.algos import CBC
 
 if __name__ == "__main__":
     logging.basicConfig(filename=".log", filemode="w", level=logging.DEBUG)
@@ -13,7 +13,7 @@ if __name__ == "__main__":
     with open(target_path, "rb") as target_file:
         byte_data = target_file.read()
 
-    ecb = ECB(K, 8)
+    ecb = CBC(K, K, 8)
     result = ecb.encode(byte_data) if encoding else ecb.decode(byte_data)
 
     output_file_name = target_path + ".encoded" if encoding else target_path + ".decoded"

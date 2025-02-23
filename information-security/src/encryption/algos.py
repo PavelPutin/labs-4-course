@@ -56,7 +56,6 @@ class BaseCypherAlgo(ABC):
 
     def _apply_rounds(self, block, keys):
         self.logger.debug(f"keys: {list(keys)}")
-        self.logger.debug(f"initial: {block}")
         for key in keys:
             block = self._cypher_round(block, key)
             block.reverse()
@@ -85,3 +84,44 @@ class ECB(BaseCypherAlgo):
 
     def _decode_block(self, block):
         return self._apply_rounds(block, list(reversed(self.keys)))
+
+
+def _re_init(f):
+    def wrapper(self, *args, **kwargs):
+        self.prev_block = [self.init_vector[0], self.init_vector[1]]
+        return f(self, *args, **kwargs)
+
+    return wrapper
+
+
+class CBC(BaseCypherAlgo):
+    def __init__(self, key, init_vector, rounds, f=f_custom):
+        self.init_vector = [get_left_32_from_64(init_vector), get_right_32_from_64(init_vector)]
+        self.prev_block = [get_left_32_from_64(init_vector), get_right_32_from_64(init_vector)]
+        super().__init__(key, rounds, f)
+        self.logger.debug(f'init prev block: {self.prev_block}')
+
+    @_re_init
+    def encode(self, byte_data):
+        return super().encode(byte_data)
+
+    @_re_init
+    def decode(self, byte_data):
+        return super().decode(byte_data)
+
+    def _encode_block(self, block):
+        self.logger.debug(f"initial encoding: {block}")
+        block = [block[i] ^ self.prev_block[i] for i in range(len(block))]
+        block = self._apply_rounds(block, self.keys)
+        self.prev_block = [block[i] for i in range(len(block))]
+        self.logger.debug(f'prev block: {self.prev_block}')
+        return block
+
+    def _decode_block(self, block):
+        temp_block = [block[0], block[1]]
+        self.logger.debug(f"initial decoding: {block}")
+        block = self._apply_rounds(block, list(reversed(self.keys)))
+        block = [block[i] ^ self.prev_block[i] for i in range(len(block))]
+        self.prev_block = [temp_block[i] for i in range(len(temp_block))]
+        self.logger.debug(f'prev block: {self.prev_block}')
+        return block

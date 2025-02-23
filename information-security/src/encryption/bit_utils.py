@@ -8,3 +8,9 @@ def shift_left(n, d):
 
 def invert(i):
   return (i ^ 0xffff_ffff) % (1 << N)
+
+def get_left_32_from_64(n):
+  return (n >> N) % (1 << N)
+
+def get_right_32_from_64(n):
+  return n % (1 << N)
