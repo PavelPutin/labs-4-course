@@ -125,3 +125,25 @@ class CBC(BaseCypherAlgo):
         self.prev_block = [temp_block[i] for i in range(len(temp_block))]
         self.logger.debug(f'prev block: {self.prev_block}')
         return block
+
+
+class CFB(CBC):
+    def __init__(self, key, init_vector, rounds, f=f_custom):
+        super().__init__(key, init_vector, rounds, f)
+
+    def _encode_block(self, block):
+        self.logger.debug(f"initial encoding: {block}")
+        encoded = self._apply_rounds(self.prev_block, self.keys)
+        block = [block[i] ^ encoded[i] for i in range(len(block))]
+        self.prev_block = [block[i] for i in range(len(block))]
+        self.logger.debug(f'prev block: {self.prev_block}')
+        return block
+
+    def _decode_block(self, block):
+        temp_block = [block[0], block[1]]
+        self.logger.debug(f"initial decoding: {block}")
+        encoded = self._apply_rounds(self.prev_block, self.keys)
+        self.prev_block = [temp_block[i] for i in range(len(temp_block))]
+        block = [block[i] ^ encoded[i] for i in range(len(block))]
+        self.logger.debug(f'prev block: {self.prev_block}')
+        return block
