@@ -15,26 +15,25 @@ def f_custom(b, k_i):
     return a ^ c_inv
 
 
-def shipher_round(integers, f, k_i):
-    for j in range(0, len(integers), 2):
-        l = integers[j]
-        r = integers[j + 1]
+def apply_rounds(block, keys, f):
+    print("keys:", list(keys))
+    print("initial:", block)
+    for key in keys:
+        block = shipher_round(block, key, f)
+        block.reverse()
+        print(block)
+    block.reverse()
+    print("result:", block)
+    print()
+    return block
 
-        lf = f(l, k_i)
-        r = lf ^ r
 
-        integers[j] = r
-        integers[j + 1] = l
-    return integers
-
-
-def last_round_deshuffle(integers):
-    for j in range(0, len(integers), 2):
-        l = integers[j]
-        r = integers[j + 1]
-        integers[j] = r
-        integers[j + 1] = l
-    return integers
+def shipher_round(block, key, f):
+    l, r = block
+    lf = f(l, key)
+    print("lf:", lf, end=" ")
+    r = lf ^ r
+    return [l, r]
 
 
 class ECB:
@@ -42,25 +41,31 @@ class ECB:
         self.key = key
         self.rounds = rounds
         self.f = f
-        self.keys = [get_round_key(self.key, i) for i in range(rounds + 1)]
+        self.keys = [get_round_key(self.key, i) for i in range(rounds)]
 
     def encode(self, byte_data):
+        print("encode")
         blocks = get_blocks(byte_data)
+        print("blocks: ", blocks)
         integers = blocks_to_integers(blocks)
-        for i in range(8):
-            integers = shipher_round(integers, self.f, self.keys[i])
-        else:
-            integers = last_round_deshuffle(integers)
+        print("integers: ", integers)
+        for i in range(0, len(integers), 2):
+            block = [integers[i], integers[i + 1]]
+            block = apply_rounds(block, self.keys, self.f)
+            integers[i], integers[i + 1] = block
         blocks = integers_to_blocks(integers)
         return join_blocks(blocks)
 
     def decode(self, byte_data):
+        print("decode")
         blocks = get_blocks(byte_data)
+        print("blocks: ", blocks)
         integers = blocks_to_integers(blocks)
-        for i in range(7, -1, -1):
-            integers = shipher_round(integers, self.f, self.keys[i])
-        else:
-            integers = last_round_deshuffle(integers)
+        print("integers: ", integers)
+        for i in range(0, len(integers), 2):
+            block = [integers[i], integers[i + 1]]
+            block = apply_rounds(block, list(reversed(self.keys)), self.f)
+            integers[i], integers[i + 1] = block
         blocks = integers_to_blocks(integers)
         return join_blocks(blocks)
 
@@ -75,7 +80,7 @@ if __name__ == "__main__":
     with open(target_path, "rb") as target_file:
         byte_data = target_file.read()
 
-    ecb = ECB(K, 7, f_custom)
+    ecb = ECB(K, 8, f_custom)
     result = ecb.encode(byte_data) if encoding else ecb.decode(byte_data)
 
     output_file_name = target_path + ".encoded" if encoding else target_path + ".decoded"
