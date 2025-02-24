@@ -1,0 +1,13 @@
+[project]
+name = "Information security labs"
+version = "1.0"
+authors = [
+  { name="Pavel Putin" },
+]
+description = "Information security labs"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]

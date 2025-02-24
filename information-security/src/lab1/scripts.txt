@@ -1,0 +1,3 @@
+py .\src\lab1\main.py .\resources\key encode .\resources\file       
+py .\src\lab1\main.py .\resources\key decode .\resources\file.encoded
+py main.py key2 decode file.encoded
