@@ -7,8 +7,8 @@ L = 0.1; % Коэфициент, влияющий на яркость пиксе
 r = 5; % Количество встраиваний каждого бита сообщения
 s = size(bin_txt);
 simg = size(rgbImg);
-coordy = randi([4, simg(1)-3], s(1), s(2), r);
-coordx = randi([4, simg(2)-3], s(1), s(2), r);
+coordy = randi([4, simg(1) - 3], s(1), s(2), r);
+coordx = randi([4, simg(2) - 3], s(1), s(2), r);
 coords = cat(3, coordy, coordx);
 rgbImgtxt = rgbImg;
 
@@ -26,18 +26,19 @@ for i = 1 : s(1)
             % Условный оператор определяющий в какую сторону необходимо
             % изменить цвет пикселя
         
-        if (bin_txt(i, j) == 1)
-           rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = double(rgbImg(coords(i, j, k), coords(i, j, k + 3), 3) + L * Y);
-        else
-           rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = double(rgbImg(coords(i, j, k), coords(i, j, k + 3), 3) - L * Y);
-        end
-        
-        if (rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) > 255)
-           rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = 255;
-        end
-        if (rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) < 0)
-           rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = 0;
-        end
+            if (bin_txt(i, j) == 1)
+               rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = double(rgbImg(coords(i, j, k), coords(i, j, k + 3), 3) + L * Y);
+            else
+               rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = double(rgbImg(coords(i, j, k), coords(i, j, k + 3), 3) - L * Y);
+            end
+            
+            % корректируем границы [0 255]
+            if (rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) > 255)
+               rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = 255;
+            end
+            if (rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) < 0)
+               rgbImgtxt(coords(i, j, k), coords(i, j, k + 3), 3) = 0;
+            end
         end
     end
 end

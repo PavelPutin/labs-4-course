@@ -14,9 +14,12 @@ end
 
 fclose(text1);
 
+% оставляем в тексте только буквы
 txt(1,:) = txt_r(find((double(txt_r)>1040) + (double(txt_r)<1103)));
 s = size(txt);
+% убираем лишние проблелы
 txt = txt(2:2:s(2));
+% преобразуем текст в матрицу битов
 bin_txt = dec2bin(double(txt)) - '0';
 end
 
