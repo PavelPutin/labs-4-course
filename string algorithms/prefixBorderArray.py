@@ -40,7 +40,7 @@ def get_prefix_border_array_m(bp):
   n = len(bp)
   bpm = [0] * n
   bpm[-1] = bp[-1]
-  for i in range(1, n):
+  for i in range(1, n - 1):
     if bp[i] > 0 and bp[i] + 1 == bp[i + 1]:
       bpm[i] = bpm[bp[i] - 1]
     else:
