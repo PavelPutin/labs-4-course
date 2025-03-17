@@ -114,4 +114,5 @@ def bm_suffix(p, t, h=True):
     nTextR += nShift
   return result
 
+print(bs_to_ns([2, 2, 1, 0, 1, 0]))
 print(bm_suffix('aaabaa', 'aaacaabaaabaaabaaa'))
