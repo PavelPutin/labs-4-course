@@ -3,3 +3,6 @@ ai/lab-2/src/venv/
 ai/lab-3/src/venv/
 ai/lab-3/src/__pycache__/
 system-analyze/*.asv
+string algorithms/__pycache__
+/*/.idea
+/.idea
