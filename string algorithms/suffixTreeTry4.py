@@ -7,11 +7,12 @@ class Node:
         self.ibeg: int = ibeg
         self.iend: int = iend
         self.sref: Node | None = None
+        self.isref: int | None = None
         self.parent: Node | None = parent
         self.children: dict[str, Node | None] = dict()
 
     def __str__(self):
-        return f"{self.id}) {(self.ibeg, self.iend)} {self.children.keys()} [{self.sref.id if self.sref is not None else None}]"
+        return f"{self.id}) {(self.ibeg, self.iend)} {self.children.keys()} [{(self.sref.id, self.isref) if self.sref is not None else None}]"
 
 
 class Position:
@@ -25,9 +26,11 @@ class Position:
 
     def has_move(self, ch):
         #                             на вершине                           на ребре
-        return (self.i == self.node.iend and ch in self.node.children) or (self.i != self.node.iend and ch == self.tree.s[self.i + 1])
+        return self.i is None or (self.i + 1 >= self.node.iend and ch in self.node.children) or (self.i + 1 < self.node.iend and ch == self.tree.s[self.i + 1])
 
     def move(self, ch):
+        if self.i is None:
+            return
         # на вершине
         if self.i + 1 >= self.node.iend:
             self.node = self.node.children[ch] # спускаемся в ребёнка
@@ -58,17 +61,24 @@ class Position:
             self.node.parent.children[uch] = u
 
             # создаём суффиксную ссылку
-            cur_node: Node = u
-            while cur_node.parent is not None and cur_node.parent.sref is None:
+            cur_node: Node | None = u
+            while cur_node.parent.sref is None:
                 cur_node = u.parent
             else:
-                # корень
-                if cur_node.parent is None:
-                    u.sref = cur_node
-                # вершина с суффиксной ссылкой
-                elif cur_node.parent.sref is not None:
-                    cur_node = cur_node.parent.sref
-                    u.sref = cur_node.children[uch]
+                cur_node = cur_node.parent.sref
+                j = cur_node.ibeg
+                # спускаемся
+                for k in range(u.ibeg, u.iend):
+                    uchk = self.tree.s[k]
+                    if j + 1 < cur_node.iend:
+                        if self.tree.s[j + 1] == uchk:
+                            j += 1
+                    else:
+                        if uchk in cur_node.children.keys():
+                            cur_node = cur_node.children[uchk]
+                            j = cur_node.ibeg
+                u.sref = cur_node
+                u.isref = j
 
             # усекаем старую вершину до суффикса
             self.node.parent = u
@@ -81,8 +91,10 @@ class Position:
 
     def go_by_sref(self):
         # old version
+        # self.node = self.node.sref if self.node.sref is not None else self.node
+        # self.i = self.node.iend
+        self.i = self.node.isref
         self.node = self.node.sref if self.node.sref is not None else self.node
-        self.i = self.node.iend
 
 
 class SuffixTree:
@@ -94,6 +106,7 @@ class SuffixTree:
         self.virtual_root: Node = Node(-1, -1)
         self.virtual_root.children = {ch: self.root for ch in chars}
         self.root.sref = self.virtual_root
+        self.root.isref = self.virtual_root.ibeg
         curr: Position = Position(self, self.root, 0)  # пустая позиция в пустой подстроке корня
         debug_print(-1, '-', curr, self, "START")
         for i in range(len(self.s)):
