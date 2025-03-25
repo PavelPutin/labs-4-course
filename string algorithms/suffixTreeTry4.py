@@ -1,5 +1,9 @@
 from graphviz import Digraph
 import sys
+import time
+import matplotlib.pyplot as plt
+import requests
+import random
 
 
 class Node:
@@ -104,6 +108,7 @@ class Position:
 class SuffixTree:
     def __init__(self, s: str):
         self.s: str = s + '$'
+        self.iterations = 0
         self.root: Node = Node(0, 0)  # пустая подстрока в корне
         chars = set(s)
         # виртуальная вершина, чтобы работала фиктивная суффиксная ссылка и корня
@@ -116,6 +121,7 @@ class SuffixTree:
         for i in range(len(self.s)):
             ch = self.s[i]
             while not curr.has_move(ch):
+                self.iterations += 1
                 curr.create_node(i)
                 curr.go_by_sref()
                 debug_print(i, ch, curr, self)
@@ -181,6 +187,40 @@ class SuffixTree:
         # Сохраняем и показываем граф
         dot.render(filename, view=True, cleanup=True)
 
+    @staticmethod
+    def _get_random_text(length: int) -> str:
+        """Получает случайный текст из API или генерирует"""
+        try:
+            response = requests.get(
+                f'https://baconipsum.com/api/?type=meat-and-filler&paras=10&format=text'
+            )
+            text = ' '.join(response.json()).replace('\n', ' ')[:length]
+        except:
+            text = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz ', k=length))
+        return text
+
+    @classmethod
+    def build_performance_graph(cls, step: int = 500, samples: int = 3):
+        """Строит график зависимости итераций от длины текста"""
+        lengths = list(range(100, 10001, step))
+        results = []
+
+        for length in lengths:
+            total_iterations = 0
+            for _ in range(samples):
+                text = cls._get_random_text(length)
+                tree = cls(text)
+                total_iterations += tree.iterations
+            results.append(total_iterations / samples)
+
+        plt.figure(figsize=(12, 6))
+        plt.plot(lengths, results, 'b-o')
+        plt.title("Зависимость количества итераций от длины текста")
+        plt.xlabel("Длина текста (символы)")
+        plt.ylabel("Среднее количество итераций")
+        plt.grid(True)
+        plt.show()
+
 
 DEBUG_I = 0
 
@@ -211,3 +251,4 @@ if __name__ == "__main__":
     st: SuffixTree = SuffixTree(word)
     print(st)
     st.draw(word)
+    SuffixTree.build_performance_graph(step=500, samples=5)
