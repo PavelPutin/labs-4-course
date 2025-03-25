@@ -6,3 +6,4 @@ system-analyze/*.asv
 string algorithms/__pycache__
 /*/.idea
 /.idea
+/string algorithms/*.png

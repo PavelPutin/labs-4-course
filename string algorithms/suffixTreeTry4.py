@@ -1,3 +1,7 @@
+from graphviz import Digraph
+import sys
+
+
 class Node:
     ID = 0
 
@@ -17,7 +21,7 @@ class Node:
 
 class Position:
     def __init__(self, tree, node, i):
-        self.tree: SuffixTree = tree # чтобы иметь доступ к строке
+        self.tree: SuffixTree = tree  # чтобы иметь доступ к строке
         self.node: Node = node
         self.i: int = i
 
@@ -26,18 +30,19 @@ class Position:
 
     def has_move(self, ch):
         #                             на вершине                           на ребре
-        return self.i is None or (self.i + 1 >= self.node.iend and ch in self.node.children) or (self.i + 1 < self.node.iend and ch == self.tree.s[self.i + 1])
+        return self.i is None or (self.i + 1 >= self.node.iend and ch in self.node.children) or (
+                    self.i + 1 < self.node.iend and ch == self.tree.s[self.i + 1])
 
     def move(self, ch):
         if self.i is None:
             return
         # на вершине
         if self.i + 1 >= self.node.iend:
-            self.node = self.node.children[ch] # спускаемся в ребёнка
+            self.node = self.node.children[ch]  # спускаемся в ребёнка
             self.i = self.node.ibeg
         # на ребре
         else:
-            self.i += 1 # продвигаемся по ребру
+            self.i += 1  # продвигаемся по ребру
 
     def create_node(self, si: int):
         # si - индекс текущего символа в строке
@@ -82,12 +87,11 @@ class Position:
 
             # усекаем старую вершину до суффикса
             self.node.parent = u
-            self.node.ibeg = self.i + 1 # возможно, нужна + 1
+            self.node.ibeg = self.i + 1  # возможно, нужна + 1
             self.node = u
 
             # подвешиваем к новой вершине новый лист
             self.node.children[x] = Node(si, n, self.node)
-
 
     def go_by_sref(self):
         # old version
@@ -100,7 +104,7 @@ class Position:
 class SuffixTree:
     def __init__(self, s: str):
         self.s: str = s + '$'
-        self.root: Node = Node(0, 0) # пустая подстрока в корне
+        self.root: Node = Node(0, 0)  # пустая подстрока в корне
         chars = set(s)
         # виртуальная вершина, чтобы работала фиктивная суффиксная ссылка и корня
         self.virtual_root: Node = Node(-1, -1)
@@ -127,10 +131,63 @@ class SuffixTree:
             result += self.__str_node(n, level + 1)
         return result
 
+    def draw(self, filename: str = "suffix_tree") -> None:
+        """Визуализирует суффиксное дерево с помощью graphviz"""
+        dot = Digraph(comment='Suffix Tree', format='png')
+        dot.attr(rankdir='TB')
+
+        # Добавляем виртуальный корень отдельно
+        dot.node(str(self.virtual_root.id),
+                 label=f"Virtual Root\n{self.virtual_root.id}",
+                 style='dashed',
+                 color='gray',
+                 fontcolor='gray')
+
+        # Рекурсивная функция для обхода дерева
+        def add_nodes(node: Node):
+            # Создаем метку для узла
+            label_lines = [
+                f"ID: {node.id}",
+                f"range: [{node.ibeg},{node.iend})",
+                f"sref: {node.sref.id if node.sref else 'None'}",
+                f"substr: '{self.s[node.ibeg:node.iend]}'"
+            ]
+
+            # Специальное оформление для корня
+            if node == self.root:
+                dot.node(str(node.id), '\n'.join(label_lines), shape='doublecircle')
+            else:
+                dot.node(str(node.id), '\n'.join(label_lines), shape='rectangle')
+
+            # Добавляем суффиксные ссылки
+            if node.sref:
+                dot.edge(str(node.id),
+                         str(node.sref.id),
+                         style='dashed',
+                         color='blue',
+                         label=f" sref",
+                         fontcolor='blue')
+
+            # Рекурсивно добавляем детей
+            for child in node.children.values():
+                if child is not None:
+                    edge_label = self.s[child.ibeg:child.iend]
+                    dot.edge(str(node.id), str(child.id), label=edge_label)
+                    add_nodes(child)
+
+        # Начинаем обход с основного корня
+        add_nodes(self.root)
+
+        # Сохраняем и показываем граф
+        dot.render(filename, view=True, cleanup=True)
+
+
 DEBUG_I = 0
+
+
 def debug_print(i: int, ch: str, pos: Position, tree: SuffixTree, desc: str = None):
     global DEBUG_I
-    if True:
+    if False:
         print("=" * 20)
         print(f"iteration {DEBUG_I}")
         if desc is not None:
@@ -139,11 +196,18 @@ def debug_print(i: int, ch: str, pos: Position, tree: SuffixTree, desc: str = No
         print(f"Character s[{i}] = '{ch}'")
         print(f"Position: {pos.node} --- {pos.i}")
         print(f"Tree: {tree}")
-        print("=" *  20)
+        print("=" * 20)
 
-# st: SuffixTree = SuffixTree('abbaaba')
-# print(st)
-# st: SuffixTree = SuffixTree('abracadabra')
-# print(st)
-st: SuffixTree = SuffixTree('abcabxabcd')
-print(st)
+
+if __name__ == "__main__":
+    # word = 'abbaaba'
+    # word = 'abracadabra'
+    # word = 'abcabxabcd'
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <word>")
+        sys.exit(1)
+
+    word = sys.argv[1]
+    st: SuffixTree = SuffixTree(word)
+    print(st)
+    st.draw(word)
