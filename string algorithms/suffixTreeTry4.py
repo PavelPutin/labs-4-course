@@ -4,6 +4,8 @@ import time
 import matplotlib.pyplot as plt
 import requests
 import random
+import numpy as np
+from scipy import stats
 
 
 class Node:
@@ -56,6 +58,7 @@ class Position:
         if self.i == self.node.iend or self.i + 1 == self.node.iend:
             # создаём лист
             self.node.children[x] = Node(si, n, self.node)
+            self.tree.iterations += 1
         # на ребре
         else:
             # РеЗнЯ РеБрА! ┻━┻ ︵ ＼( °□° )／ ︵ ┻━┻
@@ -78,6 +81,7 @@ class Position:
                 j = cur_node.ibeg
                 # спускаемся
                 for k in range(u.ibeg, u.iend):
+                    self.tree.iterations += 1
                     uchk = self.tree.s[k]
                     if j + 1 < cur_node.iend:
                         if self.tree.s[j + 1] == uchk:
@@ -121,7 +125,6 @@ class SuffixTree:
         for i in range(len(self.s)):
             ch = self.s[i]
             while not curr.has_move(ch):
-                self.iterations += 1
                 curr.create_node(i)
                 curr.go_by_sref()
                 debug_print(i, ch, curr, self)
@@ -200,25 +203,63 @@ class SuffixTree:
         return text
 
     @classmethod
-    def build_performance_graph(cls, step: int = 500, samples: int = 3):
-        """Строит график зависимости итераций от длины текста"""
-        lengths = list(range(100, 10001, step))
-        results = []
+    def build_performance_graph(cls, step: int = 500,
+                                alpha: float = 0.05,
+                                confidence_interval: float = 10):
+        """Строит график с доверительными интервалами на основе статистических параметров"""
+        # Рассчитываем Z-оценку
+        z_score = stats.norm.ppf(1 - alpha / 2)
+
+        lengths = list(range(100, 1001, step))
+        means = []
+        conf_intervals = []
+        sample_sizes = []
 
         for length in lengths:
-            total_iterations = 0
-            for _ in range(samples):
+            # Пилотное исследование (10 замеров)
+            pilot_results = []
+            for _ in range(10):
                 text = cls._get_random_text(length)
                 tree = cls(text)
-                total_iterations += tree.iterations
-            results.append(total_iterations / samples)
+                pilot_results.append(tree.iterations)
 
-        plt.figure(figsize=(12, 6))
-        plt.plot(lengths, results, 'b-o')
-        plt.title("Зависимость количества итераций от длины текста")
-        plt.xlabel("Длина текста (символы)")
+            # Оценка стандартного отклонения
+            std_estimate = np.std(pilot_results, ddof=1)
+
+            # Расчет необходимого количества образцов
+            n = int((z_score * std_estimate / confidence_interval) ** 2)
+            n = max(n, 3)  # минимальное количество образцов
+
+            # Основные замеры
+            iterations = []
+            for _ in range(n):
+                text = cls._get_random_text(length)
+                tree = cls(text)
+                iterations.append(tree.iterations)
+
+            # Сохраняем результаты
+            means.append(np.mean(iterations))
+            conf_intervals.append(stats.sem(iterations) * z_score)
+            sample_sizes.append(n)
+
+        # Построение графика
+        plt.figure(figsize=(14, 7))
+        plt.errorbar(lengths, means, yerr=conf_intervals, fmt='-o', capsize=5)
+        plt.title(f"Производительность построения суффиксного дерева\n"
+                  f"Доверительная вероятность: {100 * (1 - alpha)}%, "
+                  f"Интервал: ±{confidence_interval} итераций")
+        plt.xlabel("Длина текста")
         plt.ylabel("Среднее количество итераций")
         plt.grid(True)
+
+        # Дополнительный график количества использованных образцов
+        plt.figure(figsize=(14, 7))
+        plt.plot(lengths, sample_sizes, 'r--o')
+        plt.title("Использованное количество образцов для каждой длины текста")
+        plt.xlabel("Длина текста")
+        plt.ylabel("Количество замеров")
+        plt.grid(True)
+
         plt.show()
 
 
@@ -251,4 +292,4 @@ if __name__ == "__main__":
     st: SuffixTree = SuffixTree(word)
     print(st)
     st.draw(word)
-    SuffixTree.build_performance_graph(step=500, samples=5)
+    SuffixTree.build_performance_graph(step=100, confidence_interval=3)
