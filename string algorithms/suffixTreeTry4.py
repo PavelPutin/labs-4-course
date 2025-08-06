@@ -11,6 +11,8 @@ from scipy import stats
 class Node:
     ID = 0
 
+    # abracadabra
+
     def __init__(self, ibeg, iend, parent=None):
         self.id = Node.ID
         Node.ID += 1
@@ -268,7 +270,7 @@ DEBUG_I = 0
 
 def debug_print(i: int, ch: str, pos: Position, tree: SuffixTree, desc: str = None):
     global DEBUG_I
-    if False:
+    if True:
         print("=" * 20)
         print(f"iteration {DEBUG_I}")
         if desc is not None:
@@ -291,5 +293,5 @@ if __name__ == "__main__":
     word = sys.argv[1]
     st: SuffixTree = SuffixTree(word)
     print(st)
-    st.draw(word)
-    SuffixTree.build_performance_graph(step=100, confidence_interval=3)
+    # st.draw(word)
+    # SuffixTree.build_performance_graph(step=100, confidence_interval=3)
